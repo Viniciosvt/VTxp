@@ -1,47 +1,60 @@
 <?php
 include 'classes/usuarios.class.php';
-$usuario = new Usuarios();
+include 'inc/header.inc.php';
+$usuario = new Usuarios();   
 ?>
-<?php include 'inc/header.inc.php'; ?>
-<main>
 
-<hr>
-<button><a href="adicionarUsuario.php">ADICIONAR</a></button>
-<br><br>
-<table border="3" width="100%">
-<tr>
-    <th>ID</th>
-    <th>NOME</th>
-    <th>TELEFONE</th>
-    <th>ENDEREÇO</th>
-    <th>DATA DE NASCIMENTO</th>
-    <th>CPF_CNPJ</th>
-    <th>EMAIL</th>
-    <th>FOTO</th>
-</tr>
-<?php
-    $lista = $usuario->listar();
-    if ($lista) 
-        foreach($lista as $item):
-?>
-<tbody>
-    <tr>
-        <td><?php echo $item['id'] ?></td> 
-        <td><?php echo $item['nome'] ?></td>
-        <td><?php echo $item['telefone'] ?></td>
-        <td><?php echo $item['endereco'] ?></td>
-        <td><?php echo $item['dt_nasc'] ?></td>
-        <td><?php echo $item['cpf_cnpj'] ?></td>
-        <td><?php echo $item['email'] ?></td>
-        <td><?php echo $item['foto'] ?></td>
-        <td>
-        <a href="editarContato.php?id=<?php echo $item['id']; ?>">Editar</a>
-        <a href="#">EXCLUIR</a>  
-    </td>    
-    </tr>
-</tbody>
-<?php
-endforeach;
-?>
-</table>
-</main>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTxp - Lista de Usuários</title>
+    <link rel="stylesheet" href="css/indexstyle.css"> 
+</head>
+<body>
+
+    <main>
+        <button><a href="adicionarUsuario.php">ADICIONAR</a></button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NOME</th>
+                    <th>TELEFONE</th>
+                    <th>ENDEREÇO</th>
+                    <th>DATA DE NASCIMENTO</th>
+                    <th>CPF_CNPJ</th>
+                    <th>EMAIL</th>
+                    <th>FOTO</th>
+                    <th>AÇÕES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $lista = $usuario->listar();
+                    if ($lista) 
+                        foreach($lista as $item):
+                ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($item['id']); ?></td>
+                    <td><?php echo htmlspecialchars($item['nome']); ?></td>
+                    <td><?php echo htmlspecialchars($item['telefone']); ?></td>
+                    <td><?php echo htmlspecialchars($item['endereco']); ?></td>
+                    <td><?php echo htmlspecialchars($item['dt_nasc']); ?></td>
+                    <td><?php echo htmlspecialchars($item['cpf_cnpj']); ?></td>
+                    <td><?php echo htmlspecialchars($item['email']); ?></td>
+                    <td><img src="<?php echo htmlspecialchars($item['foto']); ?>" alt="Foto"></td>
+                    <td class="actions">
+                        <a href="#">EDITAR</a>
+                        <a href="#" class="delete">EXCLUIR</a>
+                    </td>
+                </tr>
+                <?php
+                endforeach;
+                ?>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
